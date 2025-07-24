@@ -1,75 +1,29 @@
-# Nuxt Minimal Starter
+# HubSpot Marketing Hub Insights
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A dashboard application built with Nuxt 3 that visualizes HubSpot Marketing Hub data using Chart.js.
 
 ## Setup
 
-Make sure to install dependencies:
-
 ```bash
-# npm
+# install dependencies
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+# start development server
 npm run dev
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
+# build for production
 npm run build
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
+# locally preview production build
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Tech Stack
+
+- Nuxt 3
+- Vue 3
+- Chart.js
+- TypeScript
+- Tailwind CSS
+
+Check out the [About page](http://localhost:3000/about) for detailed documentation about implementation decisions and project progress.
