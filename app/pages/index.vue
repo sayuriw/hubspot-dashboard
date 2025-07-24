@@ -18,7 +18,7 @@ const uniqueValues = computed(() => data.value?.uniqueValues);
 
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-2xl text-center mb-6 font-bold">HubSpot Marketing Hub Insights</h1>
+    <h1 class="text-2xl text-center my-6 font-bold">HubSpot Marketing Hub Insights</h1>
     <div v-if="loading" class="flex items-center justify-center h-64">
       <p class="text-gray-500">Loading data...</p>
     </div>

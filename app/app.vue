@@ -1,7 +1,10 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <main class="py-6">
-      <NuxtPage />
-    </main>
+    <Navigation />
+    <NuxtPage />
   </div>
 </template>
+
+<script setup>
+import Navigation from '~/components/Navigation.vue'
+</script>

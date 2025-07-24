@@ -2,7 +2,7 @@
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { Chart, registerables } from 'chart.js'
 import type { ChartConfiguration } from 'chart.js'
-import type { Question, DataEntry } from '../composables/types'
+import type { Question, DataEntry } from '~/types'
 
 // Register Chart.js components
 Chart.register(...registerables)
