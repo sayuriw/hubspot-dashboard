@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import useHubSpotData from '~/composables/useHubSpotData'
+import FilterPanel from '~/components/FilterPanel.vue'
 import ChartComponent from '~/components/ChartComponent.vue'
 
 const { data, loading } = useHubSpotData()
@@ -11,7 +12,8 @@ const filters = ref({
   quarter: []
 })
 
-const currentQuestion = computed(() => data.value?.questions?.[0])
+const currentQuestion = computed(() => data.value?.questions?.[0]);
+const uniqueValues = computed(() => data.value?.uniqueValues);
 </script>
 
 <template>
@@ -21,6 +23,15 @@ const currentQuestion = computed(() => data.value?.questions?.[0])
       <p class="text-gray-500">Loading data...</p>
     </div>
     <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Filter Panel -->
+      <div class="lg:w-64 flex-shrink-0 bg-white p-6 rounded-lg shadow">
+        <FilterPanel
+          :unique-values="uniqueValues"
+          v-model:selected-company-size="filters.companySize"
+          v-model:selected-industry="filters.industry"
+          v-model:selected-quarter="filters.quarter"
+        />
+      </div>
       <!-- Chart -->
       <div class="flex-grow">
         <div class="bg-white shadow rounded-lg p-6">
