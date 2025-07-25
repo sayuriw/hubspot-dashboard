@@ -92,18 +92,13 @@ I chose to implement Question 1 (Current Tools) because:
 
 ### Immediate Improvements
 1. Add filter state persistence across page navigation
-2. Improve chart performance:
-   - Implement smooth chart transitions
-   - Optimize chart update logic to prevent unnecessary re-renders
-   - Implement debouncing for filter changes
-   - Add proper cleanup for chart instances
-3. Enhance filter UX with select/deselect all
-4. Add comprehensive error handling:
+2. Enhance filter UX with select/deselect all
+3. Add comprehensive error handling:
    - Error handling for data fetching in useHubSpotData
    - Error states for filter operations
    - Proper loading states during data operations
    - User-friendly error messages and recovery options
-5. Implement data caching
+4. Implement data caching
 
 ### Future Features
 1. Additional chart types for different insights
@@ -124,17 +119,18 @@ Clean, type-safe data processing pipeline with clear, maintainable code. The van
 
 ### Chart Updates & State Management
 **Challenge:**  
-Managing filter state together with Chart.js updates proved particularly challenging. The combination of reactive filter updates and chart re-rendering caused performance issues and visual glitches. Chart.js animations would conflict with Vue's reactivity, leading to choppy transitions and occasional data misrepresentation.
+Managing filter state together with Chart.js updates proved particularly challenging. The combination of reactive filter updates and chart re-rendering caused performance issues and visual glitches. Initial attempts to update the chart led to stack overflow errors and animation issues.
 
 **Solution:**  
-- Disabled Chart.js animations completely to ensure data accuracy
-- Implemented isUpdating flag to prevent concurrent updates
-- Added proper cleanup of chart instances
-- Used Vue's composition API for cleaner state management
-While this solution sacrificed smooth transitions for reliability, it ensured consistent data display.
+Implemented a proper update sequence for Chart.js:
+1. Update labels directly with chartData.labels
+2. Update subtitle through chart options
+3. Update dataset data with chartData.values
+4. Call chart.value.update() to refresh
+This approach maintains animations while preventing recursion issues.
 
 **Outcome:**  
-Stable chart updates and reliable data visualization, though without animations. This trade-off highlighted the need for future optimization of the chart update logic and proper animation handling.
+Stable chart updates with smooth animations and reliable data visualization. The solution provides a clean way to update both data and visual elements of the chart without compromising performance.
 
 ## Technical Decisions
 

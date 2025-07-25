@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, shallowRef, watch, onMounted, onUnmounted } from 'vue'
 import { Chart, registerables } from 'chart.js'
 import type { ChartConfiguration } from 'chart.js'
 import type { Question, DataEntry } from '~/types'
@@ -17,7 +17,7 @@ const props = defineProps<{
 }>();
 
 const chartRef = ref<HTMLCanvasElement | null>(null)
-const chart = ref<Chart | null>(null)
+const chart = shallowRef<Chart | null>(null)
 const loading = ref(false)
 const error = ref<string | null>(null)
 const isUpdating = ref(false)
@@ -108,12 +108,6 @@ const updateChart = async () => {
   error.value = null
 
   try {
-    // Always destroy the existing chart first
-    if (chart.value) {
-      chart.value.destroy()
-      chart.value = null
-    }
-
     const chartData = processChartData(props.question, props.filters)
     if (!chartData || !chartRef.value) return
 
@@ -133,9 +127,6 @@ const updateChart = async () => {
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
-        animation: {
-          duration: 0 // Disable animations for better performance
-        },
         plugins: {
           title: {
             display: true,
@@ -188,7 +179,21 @@ const updateChart = async () => {
       }
     }
 
-    chart.value = new Chart(chartRef.value, config)
+    if (!chart.value) {
+      chart.value = new Chart(chartRef.value, config)      
+    } else {
+      chart.value.data.labels = chartData.labels
+      
+      if (chart.value.options.plugins?.subtitle) {
+        chart.value.options.plugins.subtitle.text = chartData.subtitle
+      }
+
+      if (chart.value.data.datasets.length > 0 && chart.value.data.datasets[0]) {
+        chart.value.data.datasets[0].data = chartData.values
+      }
+      chart.value.update();
+    }
+
   } catch (e) {
     error.value = 'Error creating chart'
     console.error('Error in updateChart:', e)
